@@ -1,0 +1,35 @@
+{% extends 'dailymeeting/base.html' %}
+
+{% block content %}
+
+<div class="px-1 py-1 mx-auto text-center">
+  <h1 class="display-8">デイリーミーティング</h1>
+  <p class="lead">ほげほげ</p>
+</div>
+<!-- <div class="row"> -->
+  {% if day_list %}
+
+  <div class="card-columns">
+  {% for day in day_list %}
+    <div class="card">
+      <div class="card-header">{{ day.day }} ({{ day.get_day_of_week }})</div>
+      {%if day.image1 %}
+      <img class="card-img-top" src="{{ day.image1.url }}" alt="Card image cap">
+      {% endif %}
+      <div class="card-body">
+        <h5 class="card-title">{{ day.day }}</h5>
+        <p class="card-text">{{ day.message }}</p>
+      </div>
+    </div>
+  {% endfor %}
+  </div>
+
+  {% else %}
+  <div class="col">
+    <p>No days are available.</p>
+  </div>
+  {% endif %}
+
+<!-- </div> -->
+
+{% endblock %}
