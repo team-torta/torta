@@ -15,6 +15,8 @@
 
   <!-- Add Material CSS, replace Bootstrap CSS -->
   <link rel="stylesheet" type="text/css" href="{% static 'material-4/css/material.min.css' %}" />
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css" />
+
   <!-- torta CSS -->
   <link rel="stylesheet" type="text/css" href="{% sass_src 'css/base.scss' %}" />
 </head>
@@ -30,12 +32,17 @@
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/locales/bootstrap-datepicker.ja.min.js"></script>
 
   <!-- Then Material JavaScript on top of Bootstrap JavaScript -->
   <script src="{% static 'material-4/js/material.min.js' %}"></script>
+
+  {% block script %}
+  {% endblock %}
 
 </body>
 

@@ -1,4 +1,6 @@
 from django.db import models
+from imagekit.models import ImageSpecField, ProcessedImageField
+from imagekit.processors import ResizeToFill
 import locale
 
 
@@ -13,8 +15,19 @@ class Member(models.Model):
 class Day(models.Model):
     day = models.DateField(verbose_name='日付', null=True, )
     message = models.TextField(verbose_name='メッセージ', null=True, )
-    image1 = models.ImageField(upload_to='images/', null=True, blank=True, )
-    image2 = models.ImageField(upload_to='images/', null=True, blank=True, )
+    image1 = models.ImageField(verbose_name='添付イメージ１',
+                               upload_to='images/', null=True, blank=True, )
+    thumbnail1 = ImageSpecField(source='image1',
+                                processors=[ResizeToFill(300, 250)],
+                                format="JPEG",
+                                options={'quality': 60})
+
+    image2 = models.ImageField(verbose_name='添付イメージ２',
+                               upload_to='images/', null=True, blank=True, )
+    thumbnail2 = ImageSpecField(source='image2',
+                                processors=[ResizeToFill(300, 250)],
+                                format="JPEG",
+                                options={'quality': 60})
 
     def __str__(self):
         return str(self.day)

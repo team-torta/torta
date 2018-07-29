@@ -1,0 +1,15 @@
+<form method="post">
+  {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Save" />
+</form>
+<script>
+$(function(){
+    //Default
+    $('#id_day').datepicker({
+        format: "yyyy-mm-dd",
+        language: 'ja'
+    });
+
+});
+</script>

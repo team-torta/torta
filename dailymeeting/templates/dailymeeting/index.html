@@ -1,28 +1,46 @@
 {% extends 'core/base.html' %}
 
-{% block content %}
+{% block container %}
 
 <div class="px-1 py-1 mx-auto text-center">
   <h1 class="display-8">デイリーミーティング</h1>
   <p class="lead">ほげほげ</p>
 </div>
-<!-- <div class="row"> -->
+<div class="px-1 py-1 row">
+  <div class="col">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal">
+      Create
+    </button>
+  </div>
+</div>
   {% if day_list %}
 
-  <div class="card-columns">
   {% for day in day_list %}
     <div class="card">
-      <div class="card-header">{{ day.day }} ({{ day.get_day_of_week }})</div>
-      {%if day.image1 %}
-      <img class="card-img-top" src="{{ day.image1.url }}" alt="Card image cap">
-      {% endif %}
+      <div class="card-header ">{{ day.day }} ({{ day.get_day_of_week }})</div>
       <div class="card-body">
-        <h5 class="card-title">{{ day.day }}</h5>
-        <p class="card-text">{{ day.message }}</p>
+        <div class="row">
+          <div class="col-md-auto">
+            {%if day.image1 %}
+              <img class="card-img-top" src="{{ day.thumbnail1.url }}" alt="Card image cap">
+            {% endif %}
+          </div>
+          <div class="col">
+            <h5 class="card-title">
+              {{ day.day }}
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                Update
+              </button>
+            </h5>
+
+            <div class="card-footer">
+              <p class="card-text">{{ day.message }}</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   {% endfor %}
-  </div>
 
   {% else %}
   <div class="col">
@@ -30,6 +48,37 @@
   </div>
   {% endif %}
 
-<!-- </div> -->
+  <!-- Modal -->
+  <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalTitle">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div id="modalBody" class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block script %}
+
+<script>
+$('#modal').on('show.bs.modal', function (e) {
+  $.get("/dailymeeting/create", function(data){
+    $('#modalBody').html(data);
+  });
+});
+</script>
 
 {% endblock %}
