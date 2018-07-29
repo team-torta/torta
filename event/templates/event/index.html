@@ -1,0 +1,10 @@
+{% if latest_event_list %}
+    <ul>
+    {% for event in latest_event_list %}
+        <!-- <li><a href="/event/{{ event.id }}/">{{ event.event_nm }}</a></li> -->
+        <li><a href="{% url 'event:detail' event.id %}">{{ event.event_nm }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No events are available.</p>
+{% endif %}

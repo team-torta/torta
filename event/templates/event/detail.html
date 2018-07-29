@@ -1,0 +1,9 @@
+<h1>{{ event.event_nm }}</h1>
+<ul>
+  日時：{{ event.date }}<br>
+  場所：{{ event.place }}<br>
+  参加者：
+  {% for participant in participants %}
+      <li>{{ participant.member }}</li>
+  {% endfor %}
+</ul>
