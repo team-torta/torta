@@ -1,0 +1,98 @@
+{% extends 'core/base.html' %}
+
+{% block container %}
+
+  {% if members %}
+
+  <div class="row">
+    <div class="col">
+      <div class="btn-group">
+        <button type="button" id="get_group" class="btn btn-outline-primary" >
+          組分け
+        </button>
+        <button type="button" id="copy" class="btn btn-outline-primary" >
+          <i class="material-icons">file_copy</i>
+        </button>
+      </div>
+      <div class="form-group">
+        <textarea id="result" class="form-control"  rows="5"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <table class="table table-sm ">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">おなまえ</th>
+            <th scope="col">おやすみ</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          {% for member in members %}
+
+            <tr>
+              <th scope="row">{{member.id}}</th>
+              <td>{{member.name_short}}</td>
+              <td>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                  <label class="btn btn-sm btn-success active">
+                    <input type="radio" name="options" id="option1" autocomplete="off" checked>対象
+                  </label>
+                  <label class="btn btn-sm btn-success">
+                    <input type="radio" name="options" id="option2" autocomplete="off">おやすみ
+                  </label>
+                  <label class="btn btn-sm btn-success">
+                    <input type="radio" name="options" id="option3" autocomplete="off">対象外
+                  </label>
+                </div>
+              </td>
+            </tr>
+
+          {% endfor %}
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  {% else %}
+
+  <div class="row">
+    <div class="col">
+      <p>No members are available.</p>
+    </div>
+  </div>
+  {% endif %}
+
+{% endblock %}
+
+{% block script %}
+
+<script>
+$("#get_group").click(function () {
+  $.get("./get_group", function(data){
+    $("#result").val(data);
+  });
+});
+$("#copy").click(function(){
+  // コピーコマンド発行
+  copyToClipboard("result");
+});
+function copyToClipboard(id) {
+    // コピー対象をJavaScript上で変数として定義する
+    var copyTarget = document.getElementById(id);
+    // コピー対象のテキストを選択する
+    copyTarget.select();
+    // 選択しているテキストをクリップボードにコピーする
+    document.execCommand("Copy");
+    // コピーをお知らせする
+    alert("コピーできました！ : " + copyTarget.value);
+}
+
+</script>
+
+{% endblock %}

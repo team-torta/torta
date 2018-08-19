@@ -9,7 +9,7 @@ class Member(models.Model):
     name_short = models.CharField(verbose_name='名前(省略)', max_length=2, )
 
     def __str__(self):
-        return self.name
+        return self.name_short
 
 
 class Day(models.Model):
