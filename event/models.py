@@ -9,6 +9,9 @@ class Event(models.Model):
     def __str__(self):
         return self.event_nm
 
+    # def get_participant_no(self):
+    #     return Participant.objects.filter(participant__event=self).count()
+        # return Event.objects.filter(event__participant=self).count()
 
 class Member(models.Model):
     # member_id = models.CharField(verbose_name='メンバーID', max_length=10, )

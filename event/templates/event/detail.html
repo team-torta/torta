@@ -1,9 +1,36 @@
-<h1>{{ event.event_nm }}</h1>
-<ul>
-  日時：{{ event.date }}<br>
-  場所：{{ event.place }}<br>
-  参加者：
-  {% for participant in participants %}
-      <li>{{ participant.member }}</li>
-  {% endfor %}
-</ul>
+{% extends 'core/base.html' %}
+
+{% block container %}
+
+<h2>{{ event.event_nm }}</h2>
+
+<table class="table table-bordered">
+  <tbody>
+    <tr>
+      <th>日時</th>
+      <td>{{ event.date }}</td>
+    </tr>
+    <tr>
+      <th>場所</th>
+      <td>{{ event.place }}</td>
+    </tr>
+    <tr>
+      <th>参加者</th>
+      <td>
+      {% for participant in participants %}
+          {{ participant.member }}
+      {% endfor %}
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<button class="btn btn-primary my-1 float-right" type="button">modify</button>
+
+<a href="{% url 'event:index'%}">back</a>
+
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'core/base.html' %}
+
+{% block container %}
+<h2>登録</h2>
+
+{{ form.non_field_errors }}
+<form method="post" action="">
+  <table class="table table-bordered">
+    {% for field in form %}
+    <tr class="table-light">
+        <td>{{ field.label_tag }}</td>
+        <td>{{ field }} {{ field.errors }}</td>
+    </tr>
+    {% endfor %}
+    {% csrf_token %}
+  </table>
+
+  <input type="submit" class="btn btn-primary my-1 float-right" value="登録">
+</form>
+
+
+
+
+<a href="{% url 'event:index'%}">back</a>
+
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

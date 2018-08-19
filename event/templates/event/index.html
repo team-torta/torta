@@ -1,10 +1,42 @@
-{% if latest_event_list %}
-    <ul>
-    {% for event in latest_event_list %}
-        <!-- <li><a href="/event/{{ event.id }}/">{{ event.event_nm }}</a></li> -->
-        <li><a href="{% url 'event:detail' event.id %}">{{ event.event_nm }}</a></li>
+{% extends 'core/base.html' %}
+
+{% block container %}
+
+{% if event_list %}
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">イベント名</th>
+      <th scope="col">日時</th>
+      <th scope="col">場所</th>
+      <th scope="col">参加人数</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for event in event_list %}
+    <tr>
+      <td>{{ event.id }}</td>
+      <td><a href="{% url 'event:detail' event.id %}">{{ event.event_nm }}</a></td>
+      <td>{{ event.date }}</td>
+      <td>{{ event.place }}</td>
+      <td>1</td><!-- <td>{{ event.get_participant_no }}</td> -->
+    </tr>
     {% endfor %}
-    </ul>
+  </tbody>
+</table>
+
 {% else %}
     <p>No events are available.</p>
 {% endif %}
+
+<button class="btn btn-float btn-sm btn-secondary my-1" type="button"
+          onClick="location.href='{% url 'event:add' %}'">
+  <i class="material-icons">add</i>
+</button>
+
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}
