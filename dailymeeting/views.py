@@ -18,7 +18,7 @@ def index(request):
     logger.info('*** exec viwes.index ***')
     day_list = Day.objects.order_by('-day')[:10]
     context = {'day_list': day_list}
-    logger.debug(create_teams(members, team_num))
+    logger.debug(create_teams(Member.objects.all(), team_num))
     return render(request, 'dailymeeting/index.html', context)
 
 
