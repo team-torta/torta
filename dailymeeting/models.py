@@ -7,6 +7,8 @@ import locale
 class Member(models.Model):
     name = models.CharField(verbose_name='名前', max_length=10, )
     name_short = models.CharField(verbose_name='名前(省略)', max_length=2, )
+    excluded = models.BooleanField(verbose_name='除外', default=False)
+    class_name = models.CharField(verbose_name='所属組', max_length=10, default="なし")
 
     def __str__(self):
         return self.name_short

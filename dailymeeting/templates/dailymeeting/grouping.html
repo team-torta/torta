@@ -7,6 +7,16 @@
   <div class="row">
     <div class="col">
       <div class="btn-group">
+      <div class="dropdown">
+        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          モード選択
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </div>
         <button type="button" id="get_group" class="btn btn-outline-primary" >
           組分け
         </button>
@@ -30,23 +40,20 @@
             <th scope="col">おやすみ</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="memberList">
 
           {% for member in members %}
 
-            <tr>
-              <th scope="row">{{member.id}}</th>
+          <tr class="row-member">
+              <th scope="row"></th>
               <td>{{member.name_short}}</td>
               <td>
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                   <label class="btn btn-sm btn-success active">
-                    <input type="radio" name="options" id="option1" autocomplete="off" checked>対象
+                    <input type="radio" name="options" value="on" autocomplete="off" checked>対象
                   </label>
                   <label class="btn btn-sm btn-success">
-                    <input type="radio" name="options" id="option2" autocomplete="off">おやすみ
-                  </label>
-                  <label class="btn btn-sm btn-success">
-                    <input type="radio" name="options" id="option3" autocomplete="off">対象外
+                    <input type="radio" name="options" value="off" autocomplete="off">対象外
                   </label>
                 </div>
               </td>
@@ -74,7 +81,11 @@
 
 <script>
 $("#get_group").click(function () {
-  $.get("./get_group", function(data){
+  // $(".row-member").each(function(i, elm){
+  //   console.log(elm);
+  // });
+
+  $.get("./get_group/2", function(data){
     $("#result").val(data);
   });
 });

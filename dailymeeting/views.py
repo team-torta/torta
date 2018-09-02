@@ -29,10 +29,18 @@ def grouping(request):
     return render(request, 'dailymeeting/grouping.html', context)
 
 
-def get_group(request):
+def get_group(request, mode=1):
     logger.info('*** exec viwes.get_group ***')
-    context = {'result': view_group(create_teams(Member.objects.all(),
-                                                 team_num))}
+
+    if int(mode) == 1:
+        context = {'result': view_group(
+                    create_teams(Member.objects.filter(excluded=False),
+                                 team_num))}
+    else:
+        context = {'result': view_group(
+                    create_teams(Member.objects.filter(excluded=True),
+                                 team_num))}
+
     return render(request,
                   'dailymeeting/get_group.html',
                   context)
