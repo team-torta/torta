@@ -1,0 +1,31 @@
+{% if entries %}
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">title</th>
+      <th scope="col">id</th>
+      <th scope="col">updated</th>
+      <th scope="col">author</th>
+      <th scope="col">content</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for entry in entries %}
+    <tr>
+      <td>{{ entry.title }}</td>
+      <td><a href="./analysis?id={{ entry.id }}">{{ entry.id }}</a></td>
+      <td>{{ entry.updated }}</td>
+      <td>{{ entry.author }}</td>
+      <td>
+        {% for c in entry.content %}
+          {{ c.value }}
+        {% endfor %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% else %}
+    <p>No feeds are available.</p>
+{% endif %}
