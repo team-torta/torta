@@ -1,6 +1,10 @@
-from django.http import HttpResponse
+from django.shortcuts import render
 
-# Create your views here.
+import logging
+logger = logging.getLogger(__name__)
+
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+    logger.info('*** exec viwes.index ***')
+    context = {'hoge': 'hoge'}
+    return render(request, 'jma/index.html', context)
