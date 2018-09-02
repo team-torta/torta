@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'core.apps.CoreConfig',
     'dailymeeting.apps.DailymeetingConfig',
     'event.apps.EventConfig',
+    'jma.apps.JmaConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
