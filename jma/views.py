@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
+from .utils.analysis import analysis_xml
 import feedparser
 import logging
 logger = logging.getLogger(__name__)
@@ -31,6 +32,8 @@ def analysis(request):
     if "id" in request.GET:
         # idが指定されている場合の処理
         # ここで解析関数を呼ぶ
+        logger.debug(analysis_xml(request.GET.get(key="id", default="none")))
+
         return HttpResponse("call = " + request.GET.get(key="id", default="none"))
     else:
         # idが指定されていない場合の処理
