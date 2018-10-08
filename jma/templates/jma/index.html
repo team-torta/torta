@@ -26,7 +26,7 @@
 
 {% block script %}
 <script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.2.0/build/ol.js"></script>
-<script src="{% static 'jma/js/tortamap.js' %}"></script>
+<!-- <script src="{% static 'jma/js/tortamap.js' %}"></script> -->
 <script>
 
 $("#getFeedListBtn").click(function () {
@@ -35,6 +35,106 @@ $("#getFeedListBtn").click(function () {
   });
 });
 
+// ---------------------------------------
+// 地図表示用
+// ---------------------------------------
+
+var RGBA_LV6 = 'rgba(180,   0, 104, 0.5)';
+var RGBA_LV5 = 'rgba(255,  40,   0, 0.5)';
+var RGBA_LV4 = 'rgba(255, 153,   0, 0.5)';
+var RGBA_LV3 = 'rgba(250, 245,   0, 0.5)';
+var RGBA_LV2 = 'rgba(185, 235, 255, 0.5)';
+var RGBA_LV1 = 'rgba(  0,  65, 255, 0.5)';
+var RGBA_LV0 = 'rgba(220, 220, 220, 0.5)';
+var RGBA_LV_ARRAY = [RGBA_LV0, RGBA_LV2, RGBA_LV3,
+                     RGBA_LV4, RGBA_LV5, RGBA_LV6,]
+
+function getPointStyle(lvno) {
+  var POINT_STYLE = new ol.style.Style({
+    image: new ol.style.Circle({
+      radius: 10,
+      fill: new ol.style.Fill({color: RGBA_LV_ARRAY[lvno-0]}),
+      stroke: new ol.style.Stroke({color: '3d3d3d', width: 1})
+    }),
+  });
+  return POINT_STYLE;
+}
+
+var iconArray = [];
+
+$(function() {
+  $.getJSON("./aci_data.json" , function(aci_data) {
+    $.getJSON("./eq_data.json" , function(eqs_data) {
+
+      for(var i = 0; i < eqs_data.eqs.length; i++) {
+        var aci;
+        var lv;
+        for(var j = 0; j < aci_data.acis.length; j++) {
+          if (eqs_data.eqs[i].citycode == aci_data.acis[j].code) {
+            aci = aci_data.acis[j];
+            lv = eqs_data.eqs[i].intensity;
+            break;
+          }
+        }
+
+        var feature = new ol.Feature({
+          geometry: new ol.geom.Point(ol.proj.fromLonLat([aci.lon-0, aci.lat-0])),
+          name: aci.name,
+        });
+        feature.setStyle(getPointStyle(lv));
+        // console.log(RGBA_LV_ARRAY[lv-0]);
+        // console.log(getPointStyle(lv));
+        vectorSource.addFeature(feature);
+      }
+      vectorSource.refresh();
+
+      // for(var i = 0; i < data.acis.length; i++) {
+      //   console.log(data.acis[i].lon + ":" + data.acis[i].lat);
+      //   var feature = new ol.Feature({
+      //     geometry: new ol.geom.Point(ol.proj.fromLonLat([data.acis[i].lon-0, data.acis[i].lat-0])),
+      //     name: data.acis[i].name,
+      //   });
+      //   console.log(feature);
+      //   feature.setStyle(POINT_STYLE);
+      //   vectorSource.addFeature(feature);
+      // }
+      // vectorSource.refresh();
+    });
+  });
+});
+
+
+
+var osmSource = new ol.source.OSM();
+
+var vectorSource = new ol.source.Vector({
+ features: []
+});
+
+var map = new ol.Map({
+  layers: [
+    new ol.layer.Tile({
+      source: osmSource
+    }),
+    new ol.layer.Vector({
+      source: vectorSource,
+      style: function(feature) {
+        style.getText().setText(feature.get('name'));
+        return style;
+      },
+    })
+  ],
+  target: 'map',
+  controls: ol.control.defaults({
+    attributionOptions: {
+      collapsible: false
+    }
+  }),
+  view: new ol.View({
+    center: ol.proj.fromLonLat([141.340956, 43.055460]),
+    zoom: 10
+  })
+});
 
 </script>
 {% endblock %}
